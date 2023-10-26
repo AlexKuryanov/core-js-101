@@ -475,9 +475,9 @@ function getIdentityMatrix(n) {
 function getIntervalArray(/* start, end */) {
   throw new Error('Not implemented');
   // let firstEl = start;
-  // return new Array(end - start + 1)
-  //   .fill(start)
-  //   .map((el, idx) => (idx === 0 ? el : (firstEl += 1)));
+  // return new Array(end - start + 1).fill(start).map((el, idx) => {
+  //   idx === 0 ? el : (firstEl += 1);
+  // });
   // return new Array(end - start + 1).fill(start).map((el, idx) => {
   //   let firstEl = start;
   //   if (idx === 0) {
@@ -536,8 +536,39 @@ function distinct(arr) {
  */
 function group(/* array, keySelector, valueSelector */) {
   throw new Error('Not implemented');
+  // const newMap = array.reduce((acc, el) => {
+  //   acc.set(keySelector(el), [valueSelector(el)]);
+  //   console.log(acc.values());
+  // }, new Map());
+  // console.log(newMap);
+  // return newMap;
 }
-
+// group(
+//   [
+//     { country: 'Belarus', city: 'Brest' },
+//     { country: 'Russia', city: 'Omsk' },
+//     { country: 'Russia', city: 'Samara' },
+//     { country: 'Belarus', city: 'Grodno' },
+//     { country: 'Belarus', city: 'Minsk' },
+//     { country: 'Poland', city: 'Lodz' },
+//   ],
+//   (item) => item.country,
+//   (item) => item.city
+// );
+// console.log(
+//   group(
+//     [
+//       { country: 'Belarus', city: 'Brest' },
+//       { country: 'Russia', city: 'Omsk' },
+//       { country: 'Russia', city: 'Samara' },
+//       { country: 'Belarus', city: 'Grodno' },
+//       { country: 'Belarus', city: 'Minsk' },
+//       { country: 'Poland', city: 'Lodz' },
+//     ],
+//     (item) => item.country,
+//     (item) => item.city
+//   )
+// );
 /**
  * Projects each element of the specified array to a sequence
  * and flattens the resulting sequences into one array.
