@@ -232,12 +232,10 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
-  // return arr.map((el, idx) => (idx === 0) ? arr[idx] = el : arr[idx] = el + arr[idx - 1]);
-  // return arr.reduce((acc, el, idx) => ((idx === 0) ? acc : acc + el), []);
+function getMovingSum(arr) {
+  // throw new Error('Not implemented');
+  return arr.reduce((a, el, idx) => [...a, el + (a[idx - 1] || 0)], []);
 }
-// console.log(getMovingSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
 /**
  * Returns every second item from the specified array:
  *
@@ -267,8 +265,9 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  // throw new Error('Not implemented');
+  return arr.map((el, idx) => Array(idx + 1).fill(el)).flat();
 }
 
 /**
@@ -472,22 +471,9 @@ function getIdentityMatrix(n) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
-  // let firstEl = start;
-  // return new Array(end - start + 1).fill(start).map((el, idx) => {
-  //   idx === 0 ? el : (firstEl += 1);
-  // });
-  // return new Array(end - start + 1).fill(start).map((el, idx) => {
-  //   let firstEl = start;
-  //   if (idx === 0) {
-  //     return el;
-  //   }
-  //   firstEl += 1;
-  //   return firstEl;
-  // });
+function getIntervalArray(start, end) {
+  return new Array(end - start + 1).fill(start).map((el, idx) => el + idx);
 }
-// console.log(getIntervalArray(1, 5));
 
 /**
  * Returns array containing only unique values from the specified array.
@@ -534,41 +520,18 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
-  // const newMap = array.reduce((acc, el) => {
-  //   acc.set(keySelector(el), [valueSelector(el)]);
-  //   console.log(acc.values());
-  // }, new Map());
-  // console.log(newMap);
-  // return newMap;
+function group(array, keySelector, valueSelector) {
+  return array.reduce(
+    (acc, obj) => acc.set(
+      keySelector(obj),
+      !acc.get(keySelector(obj))
+        ? [valueSelector(obj)]
+        : [acc.get(keySelector(obj))].concat(valueSelector(obj)).flat(),
+    ),
+    new Map(),
+  );
 }
-// group(
-//   [
-//     { country: 'Belarus', city: 'Brest' },
-//     { country: 'Russia', city: 'Omsk' },
-//     { country: 'Russia', city: 'Samara' },
-//     { country: 'Belarus', city: 'Grodno' },
-//     { country: 'Belarus', city: 'Minsk' },
-//     { country: 'Poland', city: 'Lodz' },
-//   ],
-//   (item) => item.country,
-//   (item) => item.city
-// );
-// console.log(
-//   group(
-//     [
-//       { country: 'Belarus', city: 'Brest' },
-//       { country: 'Russia', city: 'Omsk' },
-//       { country: 'Russia', city: 'Samara' },
-//       { country: 'Belarus', city: 'Grodno' },
-//       { country: 'Belarus', city: 'Minsk' },
-//       { country: 'Poland', city: 'Lodz' },
-//     ],
-//     (item) => item.country,
-//     (item) => item.city
-//   )
-// );
+
 /**
  * Projects each element of the specified array to a sequence
  * and flattens the resulting sequences into one array.
@@ -582,8 +545,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map(childrenSelector).flat();
 }
 
 /**
@@ -598,10 +561,20 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  // throw new Error('Not implemented');
+  return arr.flat(Infinity).at(indexes[indexes.length - 1]);
 }
-
+// console.log(
+//   getElementByIndexes(
+//     [
+//       [1, 2],
+//       [3, 4],
+//       [5, 6],
+//     ],
+//     [0, 0]
+//   )
+// );
 /**
  * Swaps the head and tail of the specified array:
  * the head (first half) of array move to the end, the tail (last half) move to the start.
@@ -620,10 +593,20 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
-}
+function swapHeadAndTail(arr) {
+  // throw new Error('Not implemented');
+  const head = arr.slice(0, arr.length / 2);
 
+  const tail = arr.slice(Math.ceil(arr.length / 2), arr.length);
+  const center = arr.length % 2 === 0 ? [] : arr[Math.floor(arr.length / 2)];
+  // console.log(head, center, tail);
+  if (center === 0) {
+    return tail.concat(head);
+  }
+
+  return tail.concat(center, head);
+}
+// console.log(swapHeadAndTail([1, 2, 3, 4, 5]));
 module.exports = {
   findElement,
   generateOdds,
