@@ -233,7 +233,6 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-  // throw new Error('Not implemented');
   return arr.reduce((a, el, idx) => [...a, el + (a[idx - 1] || 0)], []);
 }
 /**
@@ -266,7 +265,6 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  // throw new Error('Not implemented');
   return arr.map((el, idx) => Array(idx + 1).fill(el)).flat();
 }
 
@@ -562,19 +560,8 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-  // throw new Error('Not implemented');
   return arr.flat(Infinity).at(indexes[indexes.length - 1]);
 }
-// console.log(
-//   getElementByIndexes(
-//     [
-//       [1, 2],
-//       [3, 4],
-//       [5, 6],
-//     ],
-//     [0, 0]
-//   )
-// );
 /**
  * Swaps the head and tail of the specified array:
  * the head (first half) of array move to the end, the tail (last half) move to the start.
@@ -594,19 +581,17 @@ function getElementByIndexes(arr, indexes) {
  *
  */
 function swapHeadAndTail(arr) {
-  // throw new Error('Not implemented');
   const head = arr.slice(0, arr.length / 2);
 
   const tail = arr.slice(Math.ceil(arr.length / 2), arr.length);
   const center = arr.length % 2 === 0 ? [] : arr[Math.floor(arr.length / 2)];
-  // console.log(head, center, tail);
+
   if (center === 0) {
     return tail.concat(head);
   }
 
   return tail.concat(center, head);
 }
-// console.log(swapHeadAndTail([1, 2, 3, 4, 5]));
 module.exports = {
   findElement,
   generateOdds,
